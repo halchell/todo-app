@@ -1,0 +1,14 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "Simple TODO application with React + TypeScript + SQLite",
+  "scripts": {
+    "dev": "concurrently \"pnpm run dev:server\" \"pnpm run dev:client\"",
+    "dev:server": "cd server && pnpm run dev",
+    "dev:client": "cd client && pnpm run dev",
+    "build": "cd client && pnpm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
