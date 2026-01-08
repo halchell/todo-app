@@ -19,7 +19,7 @@ export async function createTodo(title: string): Promise<Todo> {
 }
 
 export async function updateTodo(id: number, completed: boolean): Promise<Todo> {
-  const res = await fetch(`${API_URL}/${id}`, {
+  const res = await fetch(`${API_URL}?id=${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ completed }),
@@ -29,7 +29,7 @@ export async function updateTodo(id: number, completed: boolean): Promise<Todo> 
 }
 
 export async function deleteTodo(id: number): Promise<void> {
-  const res = await fetch(`${API_URL}/${id}`, {
+  const res = await fetch(`${API_URL}?id=${id}`, {
     method: "DELETE",
   });
   if (!res.ok) throw new Error("Failed to delete todo");
