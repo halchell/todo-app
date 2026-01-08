@@ -1,7 +1,7 @@
 import { neon } from "@neondatabase/serverless";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = neon(process.env.DATABASE_URL as string);
 
 interface Todo {
   id: number;
@@ -40,10 +40,10 @@ async function handlePost(req: VercelRequest, res: VercelResponse) {
   if (!title || typeof title !== "string") {
     return res.status(400).json({ error: "Title is required" });
   }
-  const result = await sql<Todo[]>`
+  const result = await sql`
     INSERT INTO todos (title) VALUES (${title}) RETURNING *
   `;
-  return res.status(201).json(result[0]);
+  return res.status(201).json(result[0] as Todo);
 }
 
 async function handlePatch(req: VercelRequest, res: VercelResponse) {
@@ -52,13 +52,13 @@ async function handlePatch(req: VercelRequest, res: VercelResponse) {
   if (typeof completed !== "boolean") {
     return res.status(400).json({ error: "Completed must be a boolean" });
   }
-  const result = await sql<Todo[]>`
+  const result = await sql`
     UPDATE todos SET completed = ${completed} WHERE id = ${id} RETURNING *
   `;
   if (result.length === 0) {
     return res.status(404).json({ error: "Todo not found" });
   }
-  return res.status(200).json(result[0]);
+  return res.status(200).json(result[0] as Todo);
 }
 
 async function handleDelete(req: VercelRequest, res: VercelResponse) {
